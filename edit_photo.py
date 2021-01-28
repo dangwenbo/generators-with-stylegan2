@@ -36,7 +36,7 @@ def main():
 
     # 在这儿选择生成器
     tflib.init_tf()
-    with open('networks/generator_yellow-stylegan2-config-f.pkl', "rb") as f:
+    with open('networks/generator_wanghong-stylegan2-config-f.pkl', "rb") as f:
         generator_network, discriminator_network, Gs_network = pickle.load(f)
 
     # 这是一些配置参数，不要动它
@@ -59,7 +59,7 @@ def main():
     '''
         age.npy - 调整年龄
         angle_horizontal.npy - 在左右方向上调整人脸角度
-        angle_vertical.npy - 在上下方向上调整人脸角度
+        angle_pitch.npy - 在上下方向上调整人脸角度
         beauty.npy - 调整颜值
         emotion_angry.npy - 调整此项可增添/减弱一些生气的情绪（调整步幅建议缩小）
         emotion_disgust.npy - 调整此项可增添/减弱一些厌恶的情绪（调整步幅建议缩小）
@@ -79,14 +79,21 @@ def main():
         smile.npy - 调整笑容
         width.npy - 调整脸的宽度
     '''
-    direction_file = 'smile.npy'  # 从上面的编辑向量中选择一个
+    # direction_file = 'smile.npy'  # 从上面的编辑向量中选择一个
 
-    # 在这儿选择调整的大小，向量里面的值表示调整幅度，可以自行编辑，对于每个值都会生成一张图片并保存。
-    coeffs = [-15., -12., -9., -6., -3., 0., 3., 6., 9., 12.]
+    # # 在这儿选择调整的大小，向量里面的值表示调整幅度，可以自行编辑，对于每个值都会生成一张图片并保存。
+    # coeffs = np.arange(-8, 8, .4)
 
-    # 开始调整并保存图片
-    move_latent_and_save(w, direction_file, coeffs, Gs_network, Gs_syn_kwargs)
+    # # 开始调整并保存图片
+    # move_latent_and_save(w, direction_file, coeffs, Gs_network, Gs_syn_kwargs)
 
+    direction_files = ['angle_horizontal', 'angle_pitch', 'emotion_happy', 'eyes_open', 'smile']
+    for direction_file in direction_files:
+        # 在这儿选择调整的大小，向量里面的值表示调整幅度，可以自行编辑，对于每个值都会生成一张图片并保存。
+        coeffs = np.arange(-8, 8, .4)
+
+        # 开始调整并保存图片
+        move_latent_and_save(w, direction_file, coeffs, Gs_network, Gs_syn_kwargs)
 
 if __name__ == "__main__":
     main()
