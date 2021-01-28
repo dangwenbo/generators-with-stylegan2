@@ -87,7 +87,7 @@ def main():
     # # 开始调整并保存图片
     # move_latent_and_save(w, direction_file, coeffs, Gs_network, Gs_syn_kwargs)
 
-    direction_files = ['angle_horizontal', 'angle_pitch', 'emotion_happy', 'eyes_open', 'smile']
+    direction_files = ['angle_horizontal.npy', 'angle_pitch.npy', 'emotion_happy.npy', 'eyes_open.npy', 'smile.npy']
     for direction_file in direction_files:
         # 在这儿选择调整的大小，向量里面的值表示调整幅度，可以自行编辑，对于每个值都会生成一张图片并保存。
         coeffs = np.arange(-8, 8, .4)
